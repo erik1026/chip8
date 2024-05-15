@@ -62,21 +62,25 @@ void Chip8::LoadROM(char const* filename){
 }
 
 // Operations
+// 0nnn - SYS addr
 void Chip8::OP_00E0(){
     memset(video, 0, sizeof(video));
 }
 
+// 00E0 - CLS
 void Chip8::OP_00EE(){
     --sp;
     pc = stack[sp];
 }
 
+// 1nnn - JP addr
 void Chip8::OP_1nnn(){
     uint16_t address = opcode & 0x0FFFu; // the hex value is used to get the address value from the opcode
 
     pc = address;
 }
 
+// 2nnn - CALL addr
 void Chip8::OP_2nnn(){
     uint16_t address = opcode & 0x0FFFu;
 
@@ -85,11 +89,22 @@ void Chip8::OP_2nnn(){
     pc = address;
 }
 
+// 3xkk - SE Vx, byte
 void Chip8::OP_3xkk(){
     uint8_t Vx = (opcode & 0x0F00u) >> 8u;
     uint8_t byte = opcode & 0x00FFu;
 
     if (registers[Vx] == byte){
+        pc += 2;
+    }
+}
+
+// 4xkk - SNE Vx, byte
+void Chip8::OP_4xkk(){
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint8_t byte = opcode & 0x00FFu;
+
+    if (registers[Vx] != byte){
         pc += 2;
     }
 }
