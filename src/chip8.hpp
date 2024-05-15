@@ -39,6 +39,23 @@ class Chip8{
         void OP_8xy6(); // Set Vx = Vx SHR 1
         void OP_8xy7(); // Set Vx = Vy - Vx, set VF = NOT borrow
         void OP_8xyE(); // Set Vx = Vx SHL 1
+        void OP_9xy0(); // Skip next instruction if Vx != Vy
+        void OP_Annn(); // Set I = nnn
+        void OP_Bnnn(); // Jump to location nnn + V0
+        void OP_Cxkk(); // Set Vx = random byte AND kk
+        void OP_Dxyn(); // Display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision
+        void OP_Ex9E(); // Skip next instruction if key with the value of Vx is pressed
+        void OP_ExA1(); // Skip next instruction if key with the value of Vx is not pressed
+        void OP_Fx07(); // Set Vx = delay timer value
+        void OP_Fx0A(); // Wait for a key press, store the value of the key in Vx
+        void OP_Fx15(); // Set delay timer = Vx
+        void OP_Fx18(); // Set sound timer = Vx
+        void OP_Fx1E(); // Set I = I + Vx
+        void OP_Fx29(); // Set I = location of sprite for digit Vx
+        void OP_Fx33(); // Store BCD representation of Vc in memory locations I, I+1, I+2
+        void OP_Fx55(); // Store registers V0 through Vx in memory starting at location I
+        void OP_Fx65(); // Read registers V0 through Vx from memory starting at location I
+
 
         std::default_random_engine randGen;
         std::uniform_int_distribution<uint8_t> randByte;
